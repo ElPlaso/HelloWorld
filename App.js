@@ -1,12 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { Dimensions, Platform, Alert, StyleSheet, TouchableNativeFeedback, TouchableHighlight, TouchableOpacity, TouchableWithoutFeedback, Text, View, SafeAreaView, Image, Button } from 'react-native';
-//import { useDimensions, useDeviceOrientation } from '@react-native-community/hooks';
+import MathText from 'react-native-math';
 
 export default function App() {
   //console.log('App executed')
   const [bgCol, setBgCol] = useState("gold")
-  const [imageUri, setImageUri] = useState("https://picsum.photos/200/300")
+  const [imageSrc, setImageSrc] = useState("https://unsplash.it/150/200")
+  
+  const getRandomImage =()=>{
+    var randNum = Math.floor(Math.random() * 500) + 1 ;
+    return "https://unsplash.it/150/200?image=" + randNum;
+  }
 
   //const {landscape} = useDeviceOrientation();
 
@@ -26,13 +31,13 @@ export default function App() {
           {
             width: 200,
             height: 300,
-            uri: imageUri
+            uri: imageSrc
           }
         }
       />
       <Button 
         color="orange"
-        title='Randomise' onPress={() => setImageUri("https://picsum.photos/200/300")}
+        title='Randomise' onPress={() => setImageSrc(getRandomImage)}
       />
       <View 
         style={

@@ -1,14 +1,25 @@
 import { StatusBar } from 'expo-status-bar';
+import React, { useState } from 'react';
 import { Dimensions, Platform, Alert, StyleSheet, TouchableNativeFeedback, TouchableHighlight, TouchableOpacity, TouchableWithoutFeedback, Text, View, SafeAreaView, Image, Button } from 'react-native';
-import { useDimensions, useDeviceOrientation } from '@react-native-community/hooks';
+//import { useDimensions, useDeviceOrientation } from '@react-native-community/hooks';
 
 export default function App() {
   //console.log('App executed')
+  const [bgCol, setBgCol] = useState("gold")
+  const [imageUri, setImageUri] = useState("https://picsum.photos/200/300")
 
-  const {landscape} = useDeviceOrientation();
+  //const {landscape} = useDeviceOrientation();
 
   return (
-    <SafeAreaView style={containerStyle.container}>
+    <SafeAreaView style={
+      {
+        flex: 1,
+        backgroundColor: bgCol,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
+      }
+    }>
       <Text numberOfLines={1} >Random Image Generator</Text>
       <TouchableNativeFeedback onPress={() => console.log('touched')}>
         <Image
@@ -16,26 +27,22 @@ export default function App() {
             {
               width: 200,
               height: 300,
-              uri: "https://picsum.photos/200/300"
+              uri: imageUri
             }
           }
         />
       </TouchableNativeFeedback>
       <Button 
         color="orange"
-        title='Randomise' onPress={() => Alert.alert('Button Tapped', "My message", 
-        [ 
-          {text: "Yes"},
-          {text: "No"}
-        ],
-        )}
+        title='Randomise' onPress={() => setImageUri("https://picsum.photos/200/300")}
       />
       <View 
         style={
           {
             //backgroundColor: '#fff',
             flexDirection: "row",
-            padding: 4,
+            padding: 10,
+            justifyContent: 'space-between',
           }
           
         }
@@ -48,7 +55,6 @@ export default function App() {
               height: 100,
               borderWidth: 2,
               borderColor: "#0",
-              padding: 4,
             }
           }
         />
@@ -81,22 +87,3 @@ export default function App() {
     </SafeAreaView>
   );
 }
-
-const containerStyle = StyleSheet.create({ 
-  container: {
-    flex: 1,
-    backgroundColor: "gold",
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-  },
-});
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

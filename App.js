@@ -21,17 +21,15 @@ export default function App() {
       }
     }>
       <Text numberOfLines={1} >Random Image Generator</Text>
-      <TouchableNativeFeedback onPress={() => console.log('touched')}>
-        <Image
-          source={
-            {
-              width: 200,
-              height: 300,
-              uri: imageUri
-            }
+      <Image
+        source={
+          {
+            width: 200,
+            height: 300,
+            uri: imageUri
           }
-        />
-      </TouchableNativeFeedback>
+        }
+      />
       <Button 
         color="orange"
         title='Randomise' onPress={() => setImageUri("https://picsum.photos/200/300")}
@@ -47,42 +45,46 @@ export default function App() {
           
         }
       >
-        <View 
-          style={
-            {
-              backgroundColor: "dodgerblue",
-              width: 100,
-              height: 100,
-              borderWidth: 2,
-              borderColor: "#0",
+        <TouchableNativeFeedback onPress={() => setBgCol('dodgerblue')}>
+          <View 
+            style={
+              {
+                backgroundColor: "dodgerblue",
+                width: 100,
+                height: 100,
+                borderWidth: 2,
+                borderColor: "#0",
+              }
             }
-          }
-        />
-        <View 
-          style={
-            {
-              backgroundColor: "gold",
-              width: 100,
-              height: 100,
-              borderWidth: 2,
-              borderColor: "#0",
-              padding: 4,
+          />
+        </TouchableNativeFeedback>
+        <TouchableNativeFeedback onPress={() => setBgCol('gold')}>
+          <View 
+            style={
+              {
+                backgroundColor: "gold",
+                width: 100,
+                height: 100,
+                borderWidth: 2,
+                borderColor: "#0",
+              }
             }
-          }
-        />
-        <View 
-          style={
-            {
-              backgroundColor: "tomato",
-              width: 100,
-              height: 100,
-              outlineWidth: 100,
-              borderWidth: 2,
-              borderColor: "#0",
-              padding: 4,
+          />
+        </TouchableNativeFeedback>
+        <TouchableNativeFeedback onPress={() => setBgCol('tomato')}>
+          <View 
+            style={
+              {
+                backgroundColor: "tomato",
+                width: 100,
+                height: 100,
+                borderWidth: 2,
+                borderColor: "#0",
+              }
             }
-          }
-        />
+          />
+        </TouchableNativeFeedback>
+        
       </View>
     </SafeAreaView>
   );

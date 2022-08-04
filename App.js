@@ -9,7 +9,7 @@ export default function App() {
 
   return (
     <SafeAreaView style={containerStyle.container}>
-      <Text numberOfLines={3} >MarketApp</Text>
+      <Text numberOfLines={1} >Random Image Generator</Text>
       <TouchableNativeFeedback onPress={() => console.log('touched')}>
         <Image
           source={
@@ -23,22 +23,61 @@ export default function App() {
       </TouchableNativeFeedback>
       <Button 
         color="orange"
-        title='Click Me' onPress={() => Alert.alert('Button Tapped', "My message", 
+        title='Randomise' onPress={() => Alert.alert('Button Tapped', "My message", 
         [ 
           {text: "Yes"},
           {text: "No"}
-        ]
+        ],
         )}
       />
       <View 
         style={
           {
-            backgroundColor: 'dodgerblue',
-            width: '50%',
-            height: landscape ? '100%' : '30%',
+            //backgroundColor: '#fff',
+            flexDirection: "row",
+            padding: 4,
           }
+          
         }
-      />
+      >
+        <View 
+          style={
+            {
+              backgroundColor: "dodgerblue",
+              width: 100,
+              height: 100,
+              borderWidth: 2,
+              borderColor: "#0",
+              padding: 4,
+            }
+          }
+        />
+        <View 
+          style={
+            {
+              backgroundColor: "gold",
+              width: 100,
+              height: 100,
+              borderWidth: 2,
+              borderColor: "#0",
+              padding: 4,
+            }
+          }
+        />
+        <View 
+          style={
+            {
+              backgroundColor: "tomato",
+              width: 100,
+              height: 100,
+              outlineWidth: 100,
+              borderWidth: 2,
+              borderColor: "#0",
+              padding: 4,
+            }
+          }
+        />
+      </View>
     </SafeAreaView>
   );
 }
@@ -46,7 +85,7 @@ export default function App() {
 const containerStyle = StyleSheet.create({ 
   container: {
     flex: 1,
-    backgroundColor: "orange",
+    backgroundColor: "gold",
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,

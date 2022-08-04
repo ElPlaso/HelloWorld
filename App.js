@@ -4,12 +4,11 @@ import { Dimensions, Platform, Alert, StyleSheet, TouchableNativeFeedback, Touch
 import MathText from 'react-native-math';
 
 export default function App() {
-  //console.log('App executed')
+  console.log('App executed')
   const [bgCol, setBgCol] = useState("gold")
   const [imageSrc, setImageSrc] = useState("https://unsplash.it/150/200")
-  
   const getRandomImage =()=>{
-    var randNum = Math.floor(Math.random() * 500) + 1 ;
+    var randNum = Math.floor(Math.random() * 100) + 1 ;
     return "https://unsplash.it/150/200?image=" + randNum;
   }
 

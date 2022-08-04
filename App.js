@@ -1,18 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { Dimensions, Platform, Alert, StyleSheet, TouchableNativeFeedback, TouchableHighlight, TouchableOpacity, TouchableWithoutFeedback, Text, View, SafeAreaView, Image, Button } from 'react-native';
-import MathText from 'react-native-math';
+import { useDimensions, useDeviceOrientation } from '@react-native-community/hooks';
 
 export default function App() {
   console.log('App executed')
   const [bgCol, setBgCol] = useState("gold")
-  const [imageSrc, setImageSrc] = useState("https://unsplash.it/150/200")
   const getRandomImage =()=>{
     var randNum = Math.floor(Math.random() * 100) + 1 ;
     return "https://unsplash.it/150/200?image=" + randNum;
   }
+  const [imageSrc, setImageSrc] = useState(getRandomImage)
+  
 
-  //const {landscape} = useDeviceOrientation();
+  const {landscape} = useDeviceOrientation();
+  const {height} = Dimensions.get('window');
+  console.log(height)
 
   return (
     <SafeAreaView style={
@@ -21,15 +24,15 @@ export default function App() {
         backgroundColor: bgCol,
         alignItems: 'center',
         justifyContent: 'center',
-        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
+        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
       }
     }>
       <Text numberOfLines={1} >Random Image Generator</Text>
       <Image
         source={
           {
-            width: 200,
-            height: 300,
+            width: height * 0.3,
+            height: height * 0.3 * 1.5,
             uri: imageSrc
           }
         }
@@ -44,7 +47,7 @@ export default function App() {
             //backgroundColor: '#fff',
             flexDirection: "row",
             padding: 10,
-            justifyContent: 'space-between',
+            justifyContent: 'space-around',
           }
           
         }
@@ -54,9 +57,9 @@ export default function App() {
             style={
               {
                 backgroundColor: "dodgerblue",
-                width: 100,
-                height: 100,
-                borderWidth: 2,
+                width: height*0.3*0.5,
+                height: height*0.3*0.5,
+                borderWidth: 1,
                 borderColor: "#0",
               }
             }
@@ -67,9 +70,9 @@ export default function App() {
             style={
               {
                 backgroundColor: "gold",
-                width: 100,
-                height: 100,
-                borderWidth: 2,
+                width: height*0.3*0.5,
+                height: height*0.3*0.5,
+                borderWidth: 1,
                 borderColor: "#0",
               }
             }
@@ -80,9 +83,9 @@ export default function App() {
             style={
               {
                 backgroundColor: "tomato",
-                width: 100,
-                height: 100,
-                borderWidth: 2,
+                width: height*0.3*0.5,
+                height: height*0.3*0.5,
+                borderWidth: 1,
                 borderColor: "#0",
               }
             }

@@ -6,6 +6,7 @@ import { useDimensions, useDeviceOrientation } from '@react-native-community/hoo
 export default function App() {
   console.log('App executed')
   const [bgCol, setBgCol] = useState("gold")
+  const [textCol, setTextCol] = useState("black")
   const getRandomImage =()=>{
     var randNum = Math.floor(Math.random() * 100) + 1 ;
     return "https://unsplash.it/150/200?image=" + randNum;
@@ -13,7 +14,7 @@ export default function App() {
   const [imageSrc, setImageSrc] = useState(getRandomImage)
   const {height} = Dimensions.get('window')
 
-  const [randQuote, setRandQuote] = useState("Hello World")
+  const [randQuote, setRandQuote] = useState("The World Says Hello")
 
   const getRandomQuote = async () =>
   {
@@ -33,8 +34,17 @@ export default function App() {
   }
 
   let changeImage = () => {
-      getRandomQuote();
-      setImageSrc(getRandomImage);
+    setImageSrc(getRandomImage);
+    getRandomQuote();
+  }
+
+  let changeTextCol = () => {
+    if(textCol=="white"){
+      setTextCol("black");
+    }
+    else if(textCol=="black"){
+      setTextCol("white");
+    }
   }
 
   return (
@@ -47,7 +57,7 @@ export default function App() {
         paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
       }
     }>
-      <Text numberOfLines={1} style={styles.Text}>Random Image Generator</Text>
+      <Text numberOfLines={1} style={styles.Text}>Hello World Generator</Text>
       <View>
         <ImageBackground
           style={
@@ -56,13 +66,19 @@ export default function App() {
             uri: imageSrc,}}
           >
             <View style={styles.textView}>
-              <Text style={styles.imageText}>{randQuote}</Text>
+              <Text style={{fontSize: 20, fontWeight: 'bold', color: textCol,}}>
+                {randQuote}
+              </Text>
             </View>
         </ImageBackground>
       </View>
       <Button 
         color="orange"
         title='New Image' onPress={() => changeImage()}
+      />
+      <Button 
+        color="black"
+        title='Text Colour' onPress={() => changeTextCol()}
       />
       <View 
         style={
@@ -80,8 +96,8 @@ export default function App() {
             style={
               {
                 backgroundColor: "dodgerblue",
-                width: height*0.3*0.5,
-                height: height*0.3*0.5,
+                width: height*0.3*0.25,
+                height: height*0.3*0.25,
                 borderWidth: 1,
                 borderColor: "#0",
               }
@@ -93,8 +109,8 @@ export default function App() {
             style={
               {
                 backgroundColor: "gold",
-                width: height*0.3*0.5,
-                height: height*0.3*0.5,
+                width: height*0.3*0.25,
+                height: height*0.3*0.25,
                 borderWidth: 1,
                 borderColor: "#0",
               }
@@ -106,15 +122,14 @@ export default function App() {
             style={
               {
                 backgroundColor: "tomato",
-                width: height*0.3*0.5,
-                height: height*0.3*0.5,
+                width: height*0.3*0.25,
+                height: height*0.3*0.25,
                 borderWidth: 1,
                 borderColor: "#0",
               }
             }
           />
         </TouchableNativeFeedback>
-        
       </View>
     </SafeAreaView>
   );
@@ -125,18 +140,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-  imageText: {
-    fontSize: 20,
-    color: 'white',
-    fontWeight: 'bold',
+    top: 20,
+    left: 20,
+    right: 20,
+    bottom: 20,
   },
   Text: {
-    fontSize: 20,
+    fontSize: 30,
     color: 'black',
     fontWeight: 'bold',
   },

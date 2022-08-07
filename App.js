@@ -61,21 +61,37 @@ export default function App() {
       <View>
         <ImageBackground
           style={
-            {width: 0.5*height, height: 0.5*height,} }
+            {width: 2*0.5*height/3, height: 0.5*height} }
           source={{
             uri: imageSrc,}}
           >
             <View style={styles.textView}>
-              <Text style={{fontSize: 20, fontWeight: 'bold', color: textCol,}}>
+              <Text style={{fontSize: 15, color: textCol,}}>
                 {randQuote}
               </Text>
             </View>
         </ImageBackground>
       </View>
-      <Button 
-        color="orange"
-        title='New Image' onPress={() => changeImage()}
-      />
+      <View 
+        style={
+          {
+            //backgroundColor: '#fff',
+            flexDirection: "row",
+            padding: 10,
+            justifyContent: 'space-around',
+          }
+          
+        }
+      >
+        <Button 
+          color="orange"
+          title='New Image' onPress={() =>  setImageSrc(getRandomImage)}
+        />
+        <Button 
+          color="orange"
+          title='New Quote' onPress={() => getRandomQuote()}
+        />
+      </View>
       <Button 
         color="black"
         title='Text Colour' onPress={() => changeTextCol()}
@@ -146,7 +162,7 @@ const styles = StyleSheet.create({
     bottom: 20,
   },
   Text: {
-    fontSize: 30,
+    fontSize: 20,
     color: 'black',
     fontWeight: 'bold',
   },

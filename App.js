@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { ImageBackground, Dimensions, Platform, StyleSheet, TouchableNativeFeedback, Text, View, SafeAreaView, Button } from 'react-native';
+import { Background, ImageBackground, Dimensions, Platform, StyleSheet, TouchableNativeFeedback, Text, View, SafeAreaView, Button } from 'react-native';
 import { useDimensions, useDeviceOrientation } from '@react-native-community/hooks';
 
 export default function App() {
@@ -75,42 +75,41 @@ export default function App() {
         paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
       }
     }>
-      <View
-        style={
-          {
-            position: 'absolute',
-            top:80,
-          }
-        }
-      >
+      <View>
         <Text numberOfLines={1} style={styles.Text}>Hello World Generator</Text>
       </View>
       <View>
-        <ImageBackground
-          style={
-            {width: 2*0.7*height/3, height: 0.7*height} }
-          source={{
+        <TouchableNativeFeedback onPress={() => changeImage()}>
+          <ImageBackground
+            style={
+              {width: 2*0.7*height/3, height: 0.7*height} }
+            source={{
             uri: imageSrc,}}
-          >
-            <View style={styles.textView}>
-              <Text style={{
-                      fontFamily: randFont,
-                      fontSize: 25, color: 'white', 
-                      backgroundColor: "rgba(0,0,0,.5)",
-                      padding: 10,
-                    }} 
+            >
+              <View 
+                style={
+                  {flex: 1, backgroundColor: "rgba(0,0,0,.5)"} 
+                }
               >
-                {randQuote}
-              </Text>
-            </View>
-        </ImageBackground>
+                <View style={styles.textView}>
+                  <Text style={{
+                          fontFamily: randFont,
+                          fontSize: 25, color: 'white', 
+                          //backgroundColor: "rgba(0,0,0,.5)",
+                          padding: 10,
+                        }} 
+                  >
+                    {randQuote}
+                  </Text>
+                </View>
+              </View>
+          </ImageBackground>
+        </TouchableNativeFeedback>
       </View>
       <View 
         style={
           {
             //backgroundColor: '#fff',
-            position: 'absolute',
-            top: height*15/16,
             flexDirection: "row",
             justifyContent: 'space-around',
           }

@@ -54,8 +54,8 @@ export default function App() {
 
   let changeImage = () => {
     setImageSrc(getRandomImage);
-    setRandFont(getRandomFont);
     getRandomQuote();
+    setRandFont(getRandomFont);
   }
 
   // let changeTextCol = () => {

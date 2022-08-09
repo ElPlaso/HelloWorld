@@ -7,14 +7,31 @@ export default function App() {
   console.log('App executed')
   const [bgCol, setBgCol] = useState("gold")
   //const [textCol, setTextCol] = useState("black")
+  const [imageExists, setImageExists] = useState(true)
   const getRandomImage =()=>{
-    var randNum = Math.floor(Math.random() * 100) + 1 ;
-    return "https://unsplash.it/150/200?image=" + randNum;
+    var randNum = Math.floor(Math.random() * 1000) + 1 ;
+    var uritxt = "https://unsplash.it/150/200?image=" + randNum;
+    getImageExists(uritxt);
+    if(imageExists == true){
+      return uritxt;
+    }
+    else{
+      return getRandomImage;
+    }
   }
   const [imageSrc, setImageSrc] = useState(getRandomImage)
   const {height} = Dimensions.get('window')
 
   const [randQuote, setRandQuote] = useState("The World Says Hello")
+
+  const getImageExists = async (uritxt) => {
+    var http = new XMLHttpRequest();
+
+    http.open('HEAD', uritxt, false);
+    http.send();
+
+    setImageExists(http.status != 404);
+  }
 
   const getRandomQuote = async () =>
   {

@@ -1,12 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { ImageBackground, Dimensions, Platform, StyleSheet, TouchableNativeFeedback, Text, View, SafeAreaView, Image, Button, ListViewBase } from 'react-native';
+import { ImageBackground, Dimensions, Platform, StyleSheet, TouchableNativeFeedback, Text, View, SafeAreaView, Button } from 'react-native';
 import { useDimensions, useDeviceOrientation } from '@react-native-community/hooks';
 
 export default function App() {
   console.log('App executed')
   const [bgCol, setBgCol] = useState("gold")
-  const [textCol, setTextCol] = useState("black")
+  //const [textCol, setTextCol] = useState("black")
   const getRandomImage =()=>{
     var randNum = Math.floor(Math.random() * 100) + 1 ;
     return "https://unsplash.it/150/200?image=" + randNum;
@@ -31,21 +31,39 @@ export default function App() {
       const indx = Math.floor(Math.random()*allQuotes.length);
 
       setRandQuote(allQuotes[indx]['text'])
+  }    
+
+  const fontListAnd = ['normal', 'notoserif', 'sans-serif', 'sans-serif-light', 'sans-serif-thin', 
+                       'sans-serif-condensed', 'sans-serif-medium', 'serif', 'Roboto', 'monospace'
+                        ];
+
+  const fontListIos =  ['Academy Engraved LET', 'Al Nile', 'American Typewriter', 'Apple Color Emoji', 'Arial', 
+                        'Baskerville', 'Chalkboard SE', 'Damascus', 'Euphemia UCAS', 'Futura'
+                       ];     
+
+  const getRandomFont = () =>{
+    let fontList = Platform.OS === "android" ? fontListAnd: fontListIos;
+    const indx = Math.floor(Math.random()*fontList.length);
+
+    return fontList[indx];
   }
+
+  const [randFont, setRandFont] = useState(getRandomFont)
 
   let changeImage = () => {
     setImageSrc(getRandomImage);
+    setRandFont(getRandomFont);
     getRandomQuote();
   }
 
-  let changeTextCol = () => {
-    if(textCol=="white"){
-      setTextCol("black");
-    }
-    else if(textCol=="black"){
-      setTextCol("white");
-    }
-  }
+  // let changeTextCol = () => {
+  //   if(textCol=="white"){
+  //     setTextCol("black");
+  //   }
+  //   else if(textCol=="black"){
+  //     setTextCol("white");
+  //   }
+  // }
 
   return (
     <SafeAreaView style={
@@ -57,16 +75,31 @@ export default function App() {
         paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
       }
     }>
-      <Text numberOfLines={1} style={styles.Text}>Hello World Generator</Text>
+      <View
+        style={
+          {
+            position: 'absolute',
+            top:80,
+          }
+        }
+      >
+        <Text numberOfLines={1} style={styles.Text}>Hello World Generator</Text>
+      </View>
       <View>
         <ImageBackground
           style={
-            {width: 2*0.5*height/3, height: 0.5*height} }
+            {width: 2*0.7*height/3, height: 0.7*height} }
           source={{
             uri: imageSrc,}}
           >
             <View style={styles.textView}>
-              <Text style={{fontSize: 15, color: textCol,}}>
+              <Text style={{
+                      fontFamily: randFont,
+                      fontSize: 25, color: 'white', 
+                      backgroundColor: "rgba(0,0,0,.5)",
+                      padding: 10,
+                    }} 
+              >
                 {randQuote}
               </Text>
             </View>
@@ -76,26 +109,23 @@ export default function App() {
         style={
           {
             //backgroundColor: '#fff',
+            position: 'absolute',
+            top: height*15/16,
             flexDirection: "row",
-            padding: 10,
             justifyContent: 'space-around',
           }
-          
         }
       >
         <Button 
-          color="orange"
-          title='New Image' onPress={() =>  setImageSrc(getRandomImage)}
+          color="black"
+          title='New Poster' onPress={() => changeImage()}
         />
-        <Button 
-          color="orange"
+        {/* <Button 
+          color="black"
           title='New Quote' onPress={() => getRandomQuote()}
-        />
+        /> */}
       </View>
-      <Button 
-        color="black"
-        title='Text Colour' onPress={() => changeTextCol()}
-      />
+     
       <View 
         style={
           {
@@ -103,6 +133,8 @@ export default function App() {
             flexDirection: "row",
             padding: 10,
             justifyContent: 'space-around',
+            position: 'absolute',
+            bottom: 0,
           }
           
         }

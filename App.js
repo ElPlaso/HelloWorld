@@ -1,20 +1,19 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { Background, ImageBackground, Dimensions, Platform, StyleSheet, TouchableNativeFeedback, Text, View, SafeAreaView, Button } from 'react-native';
-import { useDimensions, useDeviceOrientation } from '@react-native-community/hooks';
+import { ImageBackground, Dimensions, Platform, StyleSheet, TouchableNativeFeedback, TouchableHighlight, Text, View, SafeAreaView, Button } from 'react-native';
+//import { useDimensions, useDeviceOrientation } from '@react-native-community/hooks';
 
 export default function App() {
   console.log('App executed')
-  const [bgCol, setBgCol] = useState("gold")
-  //const [textCol, setTextCol] = useState("black")
   const [imageExists, setImageExists] = useState(true)
   const getRandomImage = () => {
     var randNum = Math.floor(Math.random() * 1000) + 1 ;
     return "https://unsplash.it/150/200?image=" + randNum;
   }
 
-  const [imageSrc, setImageSrc] = useState(getRandomImage)
+  const [imageSrc, setImageSrc] = useState("https://picsum.photos/200/300")
   const {height} = Dimensions.get('window')
+  const {width} = Dimensions.get('window')
 
   const [randQuote, setRandQuote] = useState("The World Says Hello")
 
@@ -32,8 +31,18 @@ export default function App() {
       // Generates a random number between 0 and the length of the quotes array
       const indx = Math.floor(Math.random()*allQuotes.length);
 
-      setRandQuote(allQuotes[indx]['text'])
+      setRandQuote(allQuotes[indx]['text']);
   }    
+
+  const checkImageExists = async (image_url) => {
+
+    var http = new XMLHttpRequest();
+
+    http.open('HEAD', image_url, false);
+    http.send();
+
+    setImageExists(http.status != 404);
+  }
 
   const fontListAnd = ['normal', 'notoserif', 'sans-serif', 'sans-serif-light', 'sans-serif-thin', 
                        'sans-serif-condensed', 'sans-serif-medium', 'serif', 'Roboto', 'monospace'
@@ -58,33 +67,24 @@ export default function App() {
     setRandFont(getRandomFont);
   }
 
-  // let changeTextCol = () => {
-  //   if(textCol=="white"){
-  //     setTextCol("black");
-  //   }
-  //   else if(textCol=="black"){
-  //     setTextCol("white");
-  //   }
-  // }
-
   return (
     <SafeAreaView style={
       {
         flex: 1,
-        backgroundColor: bgCol,
+        backgroundColor: 'black',
         alignItems: 'center',
         justifyContent: 'center',
         paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
       }
     }>
       <View>
-        <Text numberOfLines={1} style={styles.Text}>Hello World Generator</Text>
+        <Text numberOfLines={1} style={styles.Heading}>helloworld.</Text>
       </View>
       <View>
         <TouchableNativeFeedback onPress={() => changeImage()}>
           <ImageBackground
             style={
-              {width: 2*0.7*height/3, height: 0.7*height} }
+              {width: width, height: 0.7*height} }
             source={{
             uri: imageSrc,}}
             >
@@ -108,78 +108,20 @@ export default function App() {
           </ImageBackground>
         </TouchableNativeFeedback>
       </View>
-      <View 
-        style={
-          {
-            //backgroundColor: '#fff',
-            flexDirection: "row",
-            justifyContent: 'space-around',
-          }
-        }
-      >
-        <Button 
-          color="black"
-          title='New Poster' onPress={() => changeImage()}
-        />
-        {/* <Button 
-          color="black"
-          title='New Quote' onPress={() => getRandomQuote()}
-        /> */}
-      </View>
-     
-      <View 
-        style={
-          {
-            //backgroundColor: '#fff',
-            flexDirection: "row",
-            padding: 10,
-            justifyContent: 'space-around',
-            position: 'absolute',
-            bottom: 0,
-          }
-          
-        }
-      >
-        <TouchableNativeFeedback onPress={() => setBgCol('dodgerblue')}>
-          <View 
-            style={
-              {
-                backgroundColor: "dodgerblue",
-                width: height*0.3*0.25,
-                height: height*0.3*0.25,
-                borderWidth: 1,
-                borderColor: "#0",
-              }
-            }
-          />
-        </TouchableNativeFeedback>
-        <TouchableNativeFeedback onPress={() => setBgCol('gold')}>
-          <View 
-            style={
-              {
-                backgroundColor: "gold",
-                width: height*0.3*0.25,
-                height: height*0.3*0.25,
-                borderWidth: 1,
-                borderColor: "#0",
-              }
-            }
-          />
-        </TouchableNativeFeedback>
-        <TouchableNativeFeedback onPress={() => setBgCol('tomato')}>
-          <View 
-            style={
-              {
-                backgroundColor: "tomato",
-                width: height*0.3*0.25,
-                height: height*0.3*0.25,
-                borderWidth: 1,
-                borderColor: "#0",
-              }
-            }
-          />
-        </TouchableNativeFeedback>
-      </View>
+      
+        <TouchableHighlight onPress={() => changeImage()}>
+          <View style={{backgroundColor: 'white',
+              flexDirection: "row",
+              justifyContent: 'space-around',
+              position:"relative",
+              borderRadius:15,
+              padding:15,
+              top:10,}}>
+          <Text style={styles.Button}>next poster</Text>
+          </View>
+        </TouchableHighlight>
+      
+      
     </SafeAreaView>
   );
 }
@@ -194,9 +136,13 @@ const styles = StyleSheet.create({
     right: 20,
     bottom: 20,
   },
-  Text: {
+  Heading: {
+    fontSize: 25,
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  Button: {
     fontSize: 20,
     color: 'black',
-    fontWeight: 'bold',
   },
 });

@@ -7,15 +7,27 @@ export default function App() {
   const {height} = Dimensions.get('window')
   const {width} = Dimensions.get('window')
 
+  const checkImageExists = async (imgtxt) =>
+  {
+    var url=imgtxt;    
+    const imgResp = await fetch(url);
+    
+    var exists = imgResp.ok;
+    console.log(exists);
+    return exists;
+  }
+
   const getRandomImage = () => {
-    var randNum = Math.floor(Math.random() * 1000) + 1 ;
-    var img = "https://unsplash.it/500/600?image=" + randNum;
-    return img;
+    while(true){
+      var randNum = Math.floor(Math.random() * 1000) + 1 ;
+      var img = "https://unsplash.it/500/600?image=" + randNum;
+      if(checkImageExists(img)){
+        return img;
+      }
+    }
   }
 
   const [imageSrc, setImageSrc] = useState(getRandomImage())
-  
-
   const [randQuote, setRandQuote] = useState("The World Says Hello")
 
   const getRandomQuote = async () =>

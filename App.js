@@ -2,6 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { ImageBackground, Dimensions, Platform, StyleSheet, TouchableNativeFeedback, TouchableOpacity, Text, View, SafeAreaView, Button } from 'react-native';
 //import { useDimensions, useDeviceOrientation } from '@react-native-community/hooks';
+import {captureScreen} from 'react-native-view-shot';
+import CameraRoll from "@react-native-community/cameraroll";
 
 export default function App() {
   const {height} = Dimensions.get('window')
@@ -80,6 +82,23 @@ export default function App() {
     setRandFont(getRandomFont);
   }
 
+  const takeScreenShot = () => {
+    // To capture Screenshot
+    captureScreen({
+      // Either png or jpg (or webm Android Only), Defaults: png
+      format: 'jpg',
+      // Quality 0.0 - 1.0 (only available for jpg)
+      quality: 0.8, 
+    }).then(
+      //callback function to get the result URL of the screnshot
+      (uri) => {
+        console.log(uri);
+        //CameraRoll.save(uri);
+      },
+      (error) => console.error('Oops, Something Went Wrong', error),
+    );
+  };
+
   return (
     <SafeAreaView style={
       {
@@ -134,6 +153,11 @@ export default function App() {
           width: width,
         }}
       >
+        <TouchableOpacity onPress={() => takeScreenShot()}>
+          <View style={colMode === 'dark' ? styles.Button : lightStyles.Button}>
+          <Text style={colMode === 'dark' ? styles.ButtonText : lightStyles.ButtonText}>save poster</Text>
+          </View>
+        </TouchableOpacity>
         <TouchableOpacity onPress={() => changeImage()}>
           <View style={colMode === 'dark' ? styles.Button : lightStyles.Button}>
           <Text style={colMode === 'dark' ? styles.ButtonText : lightStyles.ButtonText}>new poster</Text>

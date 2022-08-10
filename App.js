@@ -119,26 +119,27 @@ export default function App() {
             source={{
             uri: imageSrc,}}
             >
-              <TouchableNativeFeedback onPress={() => changeImage()}>
-              <View 
-                style={
-                  {
-                    flex: 1, 
-                    backgroundColor: colMode === 'dark' ? "rgba(0,0,0,.5)" : "rgba(255,255,255,.5)",
-                  } 
-                }
-              >
-                <View style={styles.textView}>
-                  <Text style={{
-                          fontFamily: randFont,
-                          fontSize: 25, color: colMode === 'dark' ? 'white' : 'black', 
-                          padding: 10,
-                        }} 
-                  >
-                    {randQuote}
-                  </Text>
+              <TouchableNativeFeedback 
+                onPress={() => changeImage()}>
+                <View 
+                  style={
+                    {
+                      flex: 1, 
+                      backgroundColor: colMode === 'dark' ? "rgba(0,0,0,.5)" : "rgba(255,255,255,.5)",
+                    } 
+                  }
+                >
+                  <View style={styles.textView}>
+                    <Text style={{
+                            fontFamily: randFont,
+                            fontSize: 25, color: colMode === 'dark' ? 'white' : 'black', 
+                            padding: 10,
+                          }} 
+                    >
+                      {randQuote}
+                    </Text>
+                  </View>
                 </View>
-              </View>
               </TouchableNativeFeedback>
           </ImageBackground>
       </View>
@@ -151,13 +152,13 @@ export default function App() {
         }}
       >
         <TouchableOpacity onPress={() => null }>
-          <View style={colMode === 'dark' ? styles.Button : lightStyles.Button}>
-          <Text style={colMode === 'dark' ? styles.ButtonText : lightStyles.ButtonText}>save poster</Text>
+          <View style={styles.Button}>
+          <Text style={colMode === 'dark' ? styles.ButtonText : lightStyles.ButtonText}>savePoster.</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => BackHandler.exitApp()}>
-          <View style={colMode === 'dark' ? styles.Button : lightStyles.Button}>
-          <Text style={colMode === 'dark' ? styles.ButtonText : lightStyles.ButtonText}>say goodbye</Text>
+        <TouchableOpacity onPress={() => changeImage()}>
+          <View style={styles.Button}>
+          <Text style={colMode === 'dark' ? styles.ButtonText : lightStyles.ButtonText}>newPoster.</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -173,16 +174,9 @@ const lightStyles = StyleSheet.create({
   },
   ButtonText: {
     fontSize: 20,
-    color: 'white',
+    color: 'black',
     fontWeight: 'bold',
   },
-  Button: {
-    backgroundColor: 'black',
-    position:'relative',
-    borderRadius:15,
-    padding:15,
-    top:10,
-  }
 })
 
 const styles = StyleSheet.create({
@@ -202,14 +196,13 @@ const styles = StyleSheet.create({
   },
   ButtonText: {
     fontSize: 20,
-    color: 'black',
+    color: 'white',
     fontWeight: 'bold',
   },
   Button: {
-    backgroundColor: 'white',
     position:'relative',
-    borderRadius:15,
-    padding:15,
+    borderRadius: 10,
+    padding:10,
     top:10,
   }
 });

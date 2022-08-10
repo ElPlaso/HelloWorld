@@ -4,16 +4,17 @@ import { ImageBackground, Dimensions, Platform, StyleSheet, TouchableNativeFeedb
 //import { useDimensions, useDeviceOrientation } from '@react-native-community/hooks';
 
 export default function App() {
-  console.log('App executed')
-  const [imageExists, setImageExists] = useState(true)
-  const getRandomImage = () => {
-    var randNum = Math.floor(Math.random() * 1000) + 1 ;
-    return "https://unsplash.it/150/200?image=" + randNum;
-  }
-
-  const [imageSrc, setImageSrc] = useState("https://picsum.photos/200/300")
   const {height} = Dimensions.get('window')
   const {width} = Dimensions.get('window')
+
+  const getRandomImage = () => {
+    var randNum = Math.floor(Math.random() * 1000) + 1 ;
+    var img = "https://unsplash.it/500/600?image=" + randNum;
+    return img;
+  }
+
+  const [imageSrc, setImageSrc] = useState(getRandomImage())
+  
 
   const [randQuote, setRandQuote] = useState("The World Says Hello")
 
@@ -33,16 +34,6 @@ export default function App() {
 
       setRandQuote(allQuotes[indx]['text']);
   }    
-
-  const checkImageExists = async (image_url) => {
-
-    var http = new XMLHttpRequest();
-
-    http.open('HEAD', image_url, false);
-    http.send();
-
-    setImageExists(http.status != 404);
-  }
 
   const fontListAnd = ['normal', 'notoserif', 'sans-serif', 'sans-serif-light', 'sans-serif-thin', 
                        'sans-serif-condensed', 'sans-serif-medium', 'serif', 'Roboto', 'monospace'
@@ -117,7 +108,7 @@ export default function App() {
               borderRadius:15,
               padding:15,
               top:10,}}>
-          <Text style={styles.Button}>next poster</Text>
+          <Text style={styles.Button}>next quote</Text>
           </View>
         </TouchableHighlight>
       

@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { ImageBackground, Dimensions, Platform, StyleSheet, TouchableNativeFeedback, TouchableHighlight, Text, View, SafeAreaView, Button } from 'react-native';
+import { ImageBackground, Dimensions, Platform, StyleSheet, TouchableNativeFeedback, TouchableOpacity, Text, View, SafeAreaView, Button } from 'react-native';
 //import { useDimensions, useDeviceOrientation } from '@react-native-community/hooks';
 
 export default function App() {
@@ -29,6 +29,16 @@ export default function App() {
 
   const [imageSrc, setImageSrc] = useState(getRandomImage())
   const [randQuote, setRandQuote] = useState("The World Says Hello")
+  const [colMode, setColMode] = useState("dark")
+
+  let changeColMode = () => {
+    if(colMode=="dark"){
+      setColMode("light");
+    }
+    else{
+      setColMode("dark")
+    }
+  }
 
   const getRandomQuote = async () =>
   {
@@ -74,33 +84,38 @@ export default function App() {
     <SafeAreaView style={
       {
         flex: 1,
-        backgroundColor: 'black',
+        backgroundColor: colMode === 'dark' ? 'black' : 'white',
         alignItems: 'center',
         justifyContent: 'center',
         paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
       }
     }>
       <View>
-        <Text numberOfLines={1} style={styles.Heading}>helloworld.</Text>
+        <TouchableOpacity onPress={() => changeColMode()}>
+          <Text numberOfLines={1} style={colMode === 'dark' ? styles.Heading : lightStyles.Heading}>helloworld.</Text>
+        </TouchableOpacity>
       </View>
       <View>
-        <TouchableNativeFeedback onPress={() => changeImage()}>
+        
           <ImageBackground
             style={
-              {width: width, height: 0.7*height} }
+              {width: width, height: 0.7*height}}
             source={{
             uri: imageSrc,}}
             >
+              <TouchableNativeFeedback onPress={() => changeImage()}>
               <View 
                 style={
-                  {flex: 1, backgroundColor: "rgba(0,0,0,.5)"} 
+                  {
+                    flex: 1, 
+                    backgroundColor: colMode === 'dark' ? "rgba(0,0,0,.5)" : "rgba(255,255,255,.5)",
+                  } 
                 }
               >
                 <View style={styles.textView}>
                   <Text style={{
                           fontFamily: randFont,
-                          fontSize: 25, color: 'white', 
-                          //backgroundColor: "rgba(0,0,0,.5)",
+                          fontSize: 25, color: colMode === 'dark' ? 'white' : 'black', 
                           padding: 10,
                         }} 
                   >
@@ -108,26 +123,46 @@ export default function App() {
                   </Text>
                 </View>
               </View>
+              </TouchableNativeFeedback>
           </ImageBackground>
-        </TouchableNativeFeedback>
       </View>
-      
-        <TouchableHighlight onPress={() => changeImage()}>
-          <View style={{backgroundColor: 'white',
-              flexDirection: "row",
-              justifyContent: 'space-around',
-              position:"relative",
-              borderRadius:15,
-              padding:15,
-              top:10,}}>
-          <Text style={styles.Button}>next quote</Text>
+      <View 
+        style={
+        {
+          flexDirection: 'row',
+          justifyContent: 'space-around',
+          width: width,
+        }}
+      >
+        <TouchableOpacity onPress={() => changeImage()}>
+          <View style={colMode === 'dark' ? styles.Button : lightStyles.Button}>
+          <Text style={colMode === 'dark' ? styles.ButtonText : lightStyles.ButtonText}>new poster</Text>
           </View>
-        </TouchableHighlight>
-      
-      
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
+
+const lightStyles = StyleSheet.create({
+  Heading: {
+    fontSize: 25,
+    color: 'black',
+    fontWeight: 'bold',
+  },
+  ButtonText: {
+    fontSize: 20,
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  Button: {
+    backgroundColor: 'black',
+    position:'relative',
+    borderRadius:15,
+    padding:15,
+    top:10,
+  }
+})
 
 const styles = StyleSheet.create({
   textView: {
@@ -144,8 +179,16 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
   },
-  Button: {
+  ButtonText: {
     fontSize: 20,
     color: 'black',
+    fontWeight: 'bold',
   },
+  Button: {
+    backgroundColor: 'white',
+    position:'relative',
+    borderRadius:15,
+    padding:15,
+    top:10,
+  }
 });
